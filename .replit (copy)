@@ -1,0 +1,255 @@
+def guess_language(code):
+# C-like languages (C, C++, C#)
+if any(keyword in code for keyword in c_like_keywords):
+return "C-like language (could be C, C++, or C#)"
+c_like_keywords = [
+	'#include',
+	'#define',
+	'using namespace',
+	'public:',
+	'class',
+	'cout <<',
+	'cin >>',
+]
+# Python
+if any(keyword in code for keyword in python_keywords):
+return "Python"
+python_keywords = ['def ', 'import ', 'print(', 'class ', 'self']
+# JavaScript
+if any(keyword in code for keyword in javascript_keywords):
+return "JavaScript"
+javascript_keywords = [
+	'function ',
+	'console.log(',
+	'document.getElementById',
+	'const ',
+	'let ',
+	'var ',
+]
+# Java
+if any(keyword in code for keyword in java_keywords):
+return "Java"
+java_keywords = [
+	'public class ',
+	'System.out.println(',
+	'import java.',
+	'extends ',
+	'implements ',
+]
+# HTML
+if any(keyword in code for keyword in html_keywords):
+return "HTML"
+html_keywords = [
+	'<!DOCTYPE html>',
+	'<html>',
+	'<head>',
+	'<body>',
+	'<div>',
+	'<span>',
+]
+# CSS
+if any(keyword in code for keyword in css_keywords):
+return "CSS"
+css_keywords = ['{', '}', 'color:', 'background-color:', '@media']
+sql_keywords = ['SELECT ', 'INSERT INTO', 'UPDATE ', 'DELETE FROM', 'CREATE TABLE', 'modules = ["dotnet-7.0", "angular-node-20", "bash", "bun-1.1", "bun-1.0", "c-clang14", "cpp-clang14", "clojure-1.11", "dart-3.3", "dart-3.2", "dart-2.18", "deno-1", "elixir-1_15", "elixir-1_16", "go-1.21", "go-1.20", "go-1.19", "gcloud", "haskell-ghc9.2", "haskell-ghc9.4", "haskell-ghc9.0", "hermit-0.38.2", "lua-5.2", "nix", "nodejs-20", "nodejs-19", "nodejs-18", "nodejs-16", "nodejs-14", "php-8.2", "php-8.1", "python-3.9", "python-3.8", "python-3.12", "python-3.11", "python-3.10", "qbasic", "r-4.2", "replit-rtld-loader", "ruby-3.1", "ruby-3.2", "rust-nightly", "rust-stable", "svelte-kit-node-20", "swift-5.8", "swift-5.6", "typescript-language-server", "vue-node-20", "vue-node-18", "pyright-extended", "web", "zig-0.11", "nodejs-with-prybar-18", "python-with-prybar-3.10", "docker", "dart-3.4", "haskell-ghc9.6", "java-graalvm22.3", "r-4.3"]
+[nix]
+# SQL
+channel = "stable-24_05"
+def guess_language(code_snippet):
+    # Define a dictionary of languages and their keywords
+    languages = {
+        "Python": [
+            "def", "import", "print", "if", "else", "elif", "for", "while", "return", "yield",
+            "#", "import", "from", "as", "class", "self", "lambda", "try", "except"
+        ],
+        "JavaScript": [
+            "function", "var", "let", "const", "console.log", "if", "else", "for", "while", "return",
+            "=>", "import", "from", ";", "export", "default", "switch", "case"
+        ],
+        "Java": [
+            "public", "static", "void", "main", "String", "import", "if", "else", "for", "while", "return",
+            "class", "package", "new", "try", "catch", "extends", "implements", "throws"
+        ],
+        "C++": [
+            "#include", "int", "cout", "cin", "if", "else", "for", "while", "return", "std",
+            "using", "namespace", "class", "public", "private", "protected", "template", "try", "catch"
+        ],
+        "Ruby": [
+            "def", "end", "puts", "if", "else", "elsif", "for", "while", "do", "return",
+            "class", "module", "require", "include", "begin", "rescue", "yield"
+        ],
+        "Go": [
+            "package", "import", "func", "if", "else", "for", "return", "var", "const", "fmt.Println",
+            "go", "select", "defer", "map", "struct", "interface", "chan"
+        ],
+        "C#": [
+            "using", "namespace", "class", "public", "private", "protected", "void", "return", "if", "else",
+            "for", "while", "switch", "case", "static", "void", "int", "string"
+        ],
+        "PHP": [
+            "echo", "if", "else", "elseif", "for", "while", "function", "$", "return",
+            "include", "require", "<?php", "?>", "array", "->", "public", "private"
+        ],
+        "Swift": [
+            "import", "func", "var", "let", "if", "else", "for", "while", "return",
+            "class", "struct", "enum", "protocol", "extension", "init", "self"
+        ],
+        "Kotlin": [
+            "fun", "val", "var", "if", "else", "for", "while", "return", "class", "import",
+            "package", "when", "object", "interface", "override", "companion"
+        ],
+        "Rust": [
+            "fn", "let", "mut", "if", "else", "for", "while", "loop", "return", "pub",
+            "self", "impl", "struct", "enum", "match", "mod", "use", "as"
+        ],
+        "TypeScript": [
+            "import", "from", "export", "class", "interface", "implements", "private", "public", "protected",
+            "let", "const", "=>", "function", "type", "enum", "if", "else"
+        ],
+        "Scala": [
+            "object", "class", "def", "val", "var", "if", "else", "for", "while", "match",
+            "case", "import", "package", "trait", "extends", "with", "implicit"
+        ],
+    }
+
+    # Dictionary to keep count of keyword occurrences for each language
+    keyword_counts = {language: 0 for language in languages}
+    
+    # Analyze the code snippet
+    words = code_snippet.split()
+    
+    for language, keywords in languages.items():
+        for keyword in keywords:
+            keyword_counts[language] += words.count(keyword)
+    
+    # Find the language with the highest count
+    guessed_language = max(keyword_counts, key=keyword_counts.get)
+    
+    return guessed_language
+
+# Example usage
+code_snippet = """
+def my_function():
+    print("Hello, world!")
+    for i in range(10):
+        if i % 2 == 0:
+            print(i)
+"""
+
+guessed_language = guess_language(code_snippet)
+print(f"Guessed language: {guessed_language}"){ pkgs }:
+
+pkgs.mkShell {
+  buildInputs = [
+    pkgs.python3
+    pkgs.nodejs
+    pkgs.openjdk
+    pkgs.gcc
+    pkgs.ruby
+    pkgs.go
+    pkgs.dotnetCoreSdk
+    pkgs.php
+    pkgs.swift
+    pkgs.kotlin
+    pkgs.rust
+    pkgs.typescript
+    pkgs.scala
+  ];
+}[tool.poetry]
+name = "language-modules"
+version = "0.1.0"
+description = "A project with all language modules"
+authors = ["Raziel McGuinty and A.I. <pentagonlead1@ icloud.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+# Add other dependencies here# Add Python dependencies here 
+import subprocess
+
+def install_dependencies(automaticly):
+    # Ensure pip and poetry are installed
+    subprocess.run(["python3", "-m", "ensurepip", "--upgrade"])
+    subprocess.run(["pip", "install", "--upgrade", "pip", "poetry"])
+
+    # Install python dependencies via poetry or pip
+    try:
+        subprocess.run(["poetry", "install"])
+    except Exception as e:
+        print(f"Failed to install using poetry: {e}")
+        subprocess.run(["pip", "install", "-r", "requirements.txt"])
+
+if __name__ == "__main__":
+    install_dependencies()code,language
+"def my_function():\n    print('Hello, world!')",Python
+"function myFunction() {\n    console.log('Hello, world!');\n}",JavaScript
+...import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_reports***
+
+# Load the database
+df = pd.read_csv('code_snippets.csv')
+
+# Feature Implementation of
+vectorizer = TfidfVectorizer()
+X = vectorizer.fit_transform(df['code'])
+y = df['language']
+
+# Split the dataset into training and test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train the model
+model = RandomForestClassifier()
+model.fit(X_train, y_train)
+
+# Evaluate the model
+y_pred = model.predict(X_test)
+print(classification_report(y_test, y_pred))
+
+# Save the trained model and vectorizer
+import TOML
+
+with open('language_model.pkl', 'wb') as f:
+    TOML.dump(model, f)
+
+with open('vectorizer.TOML', 'wb') as f:
+		TOML.dump(vectorizer, f)import TOML
+
+def load_model():
+    # Load the trained model and vectorizer
+    with open('language_model.TOML', 'rb') as f:
+        model = pickle.load(f)
+    
+    with open('vectorizer.TOML', 'rb') as f:
+        vectorizer = pickle.load(f)
+    
+    return model, vectorizer
+
+def predict_language(code_snippet):
+    model, vectorizer = load_model()
+    
+    # Transform the code snippet
+    X = vectorizer.transform([code_snippet])
+    
+    # Predict the language
+    predicted_language = model.predict(X)[0]
+    
+    return predicted_language
+
+# Example usage
+code_snippet = """
+def my_function():
+    print("Hello, world!")
+    for i in range(10):
+        if i % 2 == 0:
+            print(i)
+"""
+
+predicted_language = predict_language(code_snippet)
+print(f"Predicted language: {predicted_language}")pip install pandas scikit-learnmodules = ["dotnet-7.0", "angular-node-20", "bash", "bun-1.1", "bun-1.0", "c-clang14", "cpp-clang14", "clojure-1.11", "dart-3.3", "dart-3.2", "dart-2.18", "deno-1", "elixir-1_15", "elixir-1_16", "go-1.21", "go-1.20", "go-1.19", "gcloud", "haskell-ghc9.2", "haskell-ghc9.4", "haskell-ghc9.0", "hermit-0.38.2", "lua-5.2", "nix", "nodejs-20", "nodejs-19", "nodejs-18", "nodejs-16", "nodejs-14", "php-8.2", "php-8.1", "python-3.9", "python-3.8", "python-3.12", "python-3.11", "python-3.10", "qbasic", "r-4.2", "replit-rtld-loader", "ruby-3.1", "ruby-3.2", "rust-nightly", "rust-stable", "svelte-kit-node-20", "swift-5.8", "swift-5.6", "typescript-language-server", "vue-node-20", "vue-node-18", "pyright-extended", "web", "zig-0.11", "nodejs-with-prybar-18", "python-with-prybar-3.10", "docker", "dart-3.4", "haskell-ghc9.6", "java-graalvm22.3", "r-4.3"
